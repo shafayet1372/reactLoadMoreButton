@@ -1,25 +1,64 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { useState, useEffect } from 'react'
+import ProductView from './ProductsView'
+import LoadMoreController from './LoadMoreController'
+import CategoryHandler from './CategoriesHandler'
+const perLoad = 8
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+  let [products, setProducts] = useState([])
+  let [category, setCategory] = useState('select all')
+  let [loadCount, setLoadCount] = useState(1)
+
+  let getAllCategories = () => {
+    return [...new Set(products.map(x => x.category))]
+  }
+
+  useEffect(() => {
+    fetch('https://fakestoreapi.com/products')
+      .then(res => res.json())
+      .then(json => {
+        let data = [...Array(5).fill(json).flat(Infinity)]
+        setProducts(data)
+
+      })
+  }, [])
+
+  let categoryHandler = (e) => {
+    setCategory(e.target.value)
+    setLoadCount(p => 1)
+  }
+  let isLoadCompleted = (datas) => {
+    if (loadCount == Math.ceil(datas.length / perLoad)) {
+      return true
+    }
+    return false
+  }
+
+  let loadHandler = () => {
+    setLoadCount(p => p + 1)
+  }
+  let filterDataByCategory = (data) => {
+    if (category == 'select all') {
+      return data
+    }
+    return data.filter(x => x.category == category)
+  }
+  let showData = () => {
+    let getData = filterDataByCategory(products.slice())
+    let loadComplete = isLoadCompleted(getData)
+    let totalData = getData.length
+    let datas = getData.slice(0, perLoad * loadCount)
+    let totalResult = datas.filter(x => x).length
+    return <div>
+      <ProductView products={datas} />
+      <LoadMoreController loadComplete={loadComplete} totalResult={totalResult} loadHandler={loadHandler} totalData={totalData} />
     </div>
-  );
+  }
+  return <div className='container my-5'>
+    <CategoryHandler categoris={getAllCategories()} getCategory={category} categoryHandler={categoryHandler} />
+    {showData()}
+
+  </div>
+
 }
 
 export default App;
