@@ -54,8 +54,17 @@ function App() {
     </div>
   }
   return <div className='container my-5'>
-    <CategoryHandler categoris={getAllCategories()} getCategory={category} categoryHandler={categoryHandler} />
-    {showData()}
+    {!products.length ? <div className='row'>
+      <div className='col-md-12 text-center'>
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    </div> : <div>
+      <CategoryHandler categoris={getAllCategories()} getCategory={category} categoryHandler={categoryHandler} />
+      {showData()}
+    </div>}
+
 
   </div>
 
