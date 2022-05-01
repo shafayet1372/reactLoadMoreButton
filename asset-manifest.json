@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/reactLoadMoreButton/static/css/main.e7720ab7.css",
+    "main.js": "/reactLoadMoreButton/static/js/main.64f32931.js",
+    "static/js/787.7c9c90d6.chunk.js": "/reactLoadMoreButton/static/js/787.7c9c90d6.chunk.js",
+    "index.html": "/reactLoadMoreButton/index.html",
+    "main.e7720ab7.css.map": "/reactLoadMoreButton/static/css/main.e7720ab7.css.map",
+    "main.64f32931.js.map": "/reactLoadMoreButton/static/js/main.64f32931.js.map",
+    "787.7c9c90d6.chunk.js.map": "/reactLoadMoreButton/static/js/787.7c9c90d6.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e7720ab7.css",
+    "static/js/main.64f32931.js"
+  ]
+}
